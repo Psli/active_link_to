@@ -66,12 +66,21 @@ module ActiveLinkTo
   #                    Regex -> /regex/
   #   Controller/Action Pair -> [[:controller], [:action_a, :action_b]]
   # Example usage:
+  #   is_active_link?(['/root','/home'], true)    
   #   is_active_link?('/root', true)
   #   is_active_link?('/root', :exclusive)
   #   is_active_link?('/root', /^\/root/)
   #   is_active_link?('/root', ['users', ['show', 'edit']])
   #
-  def is_active_link?(url, condition = nil)
+  def is_active_link?(urls, condition = nil)
+    urls = [urls] unless urls.is_a?(Array)
+    urls.each do |ulr|
+      return true if is_link?(url, condition)
+    end
+    false
+  end
+  
+  def is_link?(url, condition = nil)
     url = url_for(url).sub(/\?.*/, '') # ignore GET params
     case condition
     when :inclusive, nil
