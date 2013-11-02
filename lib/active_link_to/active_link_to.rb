@@ -74,7 +74,7 @@ module ActiveLinkTo
   #
   def is_active_link?(urls, condition = nil)
     urls = [urls] unless urls.is_a?(Array)
-    urls.each do |ulr|
+    urls.each do |url|
       return true if is_link?(url, condition)
     end
     false
